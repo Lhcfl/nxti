@@ -38,6 +38,7 @@ type Phase = 'start' | 'resume' | 'quiz' | 'result'
 export type QuizState = {
   phase: Phase
   currentIndex: number
+  maxReachedIndex: number
   answers: AnswerMap
   startedAt: string
   top3: RankedPersona[]
@@ -56,6 +57,7 @@ function makeInitialState(): QuizState {
   return {
     phase: 'start',
     currentIndex: 0,
+    maxReachedIndex: 0,
     answers: {},
     startedAt: '',
     top3: [],
@@ -71,6 +73,7 @@ function reducer(state: QuizState, action: Action): QuizState {
         return {
           phase: 'result',
           currentIndex: initialIndex,
+          maxReachedIndex: initialIndex,
           answers: p.answers,
           startedAt: p.startedAt,
           top3: ranking.slice(0, 3),
@@ -79,6 +82,7 @@ function reducer(state: QuizState, action: Action): QuizState {
       return {
         phase: 'resume',
         currentIndex: initialIndex,
+        maxReachedIndex: initialIndex,
         answers: p.answers,
         startedAt: p.startedAt,
         top3: [],
@@ -89,6 +93,7 @@ function reducer(state: QuizState, action: Action): QuizState {
         ...makeInitialState(),
         phase: 'quiz',
         currentIndex: initialIndex,
+        maxReachedIndex: initialIndex,
         startedAt: new Date().toISOString(),
       }
     case 'RESUME':
@@ -103,6 +108,7 @@ function reducer(state: QuizState, action: Action): QuizState {
           [currentQuestion.id]: action.optionId,
         },
         currentIndex: nextIndex,
+        maxReachedIndex: Math.max(state.maxReachedIndex, nextIndex),
       }
     }
     case 'PREV':
@@ -124,6 +130,7 @@ function reducer(state: QuizState, action: Action): QuizState {
         ...makeInitialState(),
         phase: 'quiz',
         currentIndex: initialIndex,
+        maxReachedIndex: initialIndex,
         startedAt: new Date().toISOString(),
       }
     }
@@ -175,6 +182,7 @@ export function useQuiz() {
   const allAnswered = answeredCount === TOTAL
   const progress = Math.round((answeredCount / TOTAL) * 100)
   const currentIndex = state.currentIndex
+  const maxReachedIndex = state.maxReachedIndex
 
   return {
     state,
@@ -183,6 +191,7 @@ export function useQuiz() {
     answeredCount,
     allAnswered,
     currentIndex,
+    maxReachedIndex,
     progress,
     total: TOTAL,
     begin,

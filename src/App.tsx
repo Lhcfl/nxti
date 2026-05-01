@@ -10,9 +10,9 @@ export default function App() {
     currentQuestion,
     currentAnswer,
     currentIndex,
+    maxReachedIndex,
     answeredCount,
     allAnswered,
-    progress,
     total,
     begin,
     resume,
@@ -71,7 +71,7 @@ export default function App() {
               你已经答到第 {currentQuestionNumber} 题，要继续还是重来？
             </p>
           </div>
-          <ProgressBar current={answeredCount} total={total} percent={progress} />
+          <ProgressBar currentIndex={currentIndex} maxReachedIndex={maxReachedIndex} total={total} />
           <div className="flex gap-3">
             <button
               type="button"
@@ -98,7 +98,7 @@ export default function App() {
     return (
       <main className="quiz-shell">
         <div className="quiz-content flex flex-col gap-6">
-          <ProgressBar current={answeredCount} total={total} percent={progress} />
+          <ProgressBar currentIndex={currentIndex} maxReachedIndex={maxReachedIndex} total={total} />
           <QuestionCard
             question={currentQuestion}
             selectedOptionId={currentAnswer ?? null}
