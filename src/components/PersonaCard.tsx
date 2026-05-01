@@ -73,12 +73,6 @@ export function PersonaCard({ ranked, rank }: Props) {
           </ul>
         </div>
       )}
-
-      {isPrimary && (
-        <p className="text-xs text-[var(--text)] italic border-t border-[var(--border)] pt-3 mt-1">
-          💡 {persona.recommendation}
-        </p>
-      )}
     </div>
   )
 }

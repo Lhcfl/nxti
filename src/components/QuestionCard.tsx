@@ -1,11 +1,11 @@
-import type { Question } from '../types'
+import type { Question, QuestionOptionId } from '../types'
 
 type Props = {
   question: Question
-  selectedIndex: number | null
+  selectedOptionId: QuestionOptionId | null
   questionNumber: number
   total: number
-  onAnswer: (index: number) => void
+  onAnswer: (optionId: QuestionOptionId) => void
   onPrev: () => void
   onSubmit: () => void
   canGoBack: boolean
@@ -17,7 +17,7 @@ const optionLabels = ['A', 'B', 'C', 'D'] as const
 
 export function QuestionCard({
   question,
-  selectedIndex,
+  selectedOptionId,
   questionNumber,
   total,
   onAnswer,
@@ -40,12 +40,12 @@ export function QuestionCard({
 
       <div className="flex flex-col gap-3">
         {question.options.map((option, index) => {
-          const selected = selectedIndex === index
+          const selected = selectedOptionId === option.id
           return (
             <button
               key={option.id}
               type="button"
-              onClick={() => onAnswer(index)}
+              onClick={() => onAnswer(option.id)}
               className={[
                 'flex items-start gap-3 text-left px-4 py-3 rounded-lg border transition-all duration-150',
                 'hover:border-[var(--accent)] hover:bg-[var(--accent-bg)]',

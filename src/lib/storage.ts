@@ -1,17 +1,19 @@
-export const SCHEMA_VERSION = 1
+import { questions } from '../data/questions'
+import type { AnswerMap } from '../types'
+
+export const SCHEMA_VERSION = 2
 const STORAGE_KEY = `nxti_state_v${SCHEMA_VERSION}`
 
-type PersistedState = {
+export type PersistedState = {
   schemaVersion: number
   startedAt: string
   updatedAt: string
-  currentIndex: number
-  answers: Array<number | null>
+  answers: AnswerMap
   finishedAt?: string
   topResultCodes?: string[]
 }
 
-export function loadState(expectedQuestionCount: number): PersistedState | null {
+export function loadState(): PersistedState | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) {
@@ -24,7 +26,14 @@ export function loadState(expectedQuestionCount: number): PersistedState | null 
       return null
     }
 
-    if (!Array.isArray(parsed.answers) || parsed.answers.length !== expectedQuestionCount) {
+    if (!parsed.answers || typeof parsed.answers !== 'object' || Array.isArray(parsed.answers)) {
+      clearState()
+      return null
+    }
+
+    const validIds = new Set(questions.map((q) => q.id))
+    const answerKeys = Object.keys(parsed.answers)
+    if (answerKeys.some((key) => !validIds.has(key))) {
       clearState()
       return null
     }
@@ -48,5 +57,3 @@ export function saveState(state: PersistedState): void {
 export function clearState(): void {
   localStorage.removeItem(STORAGE_KEY)
 }
-
-export type { PersistedState }

@@ -36,16 +36,19 @@ export type PersonaId =
 
 export type ScoreDelta = Partial<Record<PersonaId, number>>
 export type ThemeVector = Partial<Record<Theme, number>>
+export type QuestionId = string
+export type QuestionOptionId = 'A' | 'B' | 'C' | 'D'
+export type AnswerMap = Partial<Record<QuestionId, QuestionOptionId>>
 
 export type QuestionOption = {
-  id: 'A' | 'B' | 'C' | 'D'
+  id: QuestionOptionId
   text: string
   effect?: ScoreDelta
   vibe?: ThemeVector
 }
 
 export type Question = {
-  id: string | number
+  id: QuestionId
   prompt: string
   theme?: Theme
   options: QuestionOption[]
@@ -59,8 +62,6 @@ export type Persona = {
   description: string
   tags: string[]
   anchors: string[]
-  baseScore?: number
-  themeAffinity?: ThemeVector
 }
 
 export type RankedPersona = {

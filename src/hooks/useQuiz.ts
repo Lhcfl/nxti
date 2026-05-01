@@ -1,13 +1,35 @@
 import { useCallback, useEffect, useReducer } from 'react'
-import { questions } from '../data/questions'
-import { getTopThree, rankPersonas, summarizeThemes } from '../lib/scoring'
+import { questions as questions_original } from '../data/questions'
+import { getTopThree, rankPersonas } from '../lib/scoring'
 import {
   clearState,
   loadState,
   saveState,
   type PersistedState,
 } from '../lib/storage'
-import type { RankedPersona } from '../types'
+import type { AnswerMap, QuestionOptionId, RankedPersona } from '../types'
+
+const [questions, initialIndex] = (() => {
+  // 打乱题目顺序
+  const shuffled = [...questions_original].sort(() => Math.random() - 0.5)
+
+  // 打乱每个题目的选项
+  for (const question of shuffled) {
+    question.options.sort(() => Math.random() - 0.5)
+  }
+
+  // 加载已保存状态
+  const state = loadState()
+
+  if (state != null) {
+    // 已答题放前面，未答题放后面
+    const answered = shuffled.filter((q) => state.answers[q.id])
+    const unanswered = shuffled.filter((q) => !state.answers[q.id])
+    return [[...answered, ...unanswered], answered.length]
+  }
+
+  return [shuffled, 0]
+})()
 
 const TOTAL = questions.length
 
@@ -16,16 +38,15 @@ type Phase = 'start' | 'resume' | 'quiz' | 'result'
 export type QuizState = {
   phase: Phase
   currentIndex: number
-  answers: Array<number | null>
+  answers: AnswerMap
   startedAt: string
   top3: RankedPersona[]
-  topThemesSummary: string
 }
 
 type Action =
   | { type: 'BEGIN' }
   | { type: 'RESUME' }
-  | { type: 'ANSWER'; optionIndex: number }
+  | { type: 'ANSWER'; optionId: QuestionOptionId }
   | { type: 'PREV' }
   | { type: 'SUBMIT' }
   | { type: 'RESTART' }
@@ -35,10 +56,9 @@ function makeInitialState(): QuizState {
   return {
     phase: 'start',
     currentIndex: 0,
-    answers: Array(TOTAL).fill(null),
+    answers: {},
     startedAt: '',
     top3: [],
-    topThemesSummary: '',
   }
 }
 
@@ -47,41 +67,43 @@ function reducer(state: QuizState, action: Action): QuizState {
     case 'LOAD': {
       const p = action.persisted
       if (p.finishedAt && p.topResultCodes?.length) {
-        const { ranking, topThemes } = rankPersonas(p.answers)
+        const { ranking } = rankPersonas(p.answers)
         return {
           phase: 'result',
-          currentIndex: TOTAL - 1,
+          currentIndex: initialIndex,
           answers: p.answers,
           startedAt: p.startedAt,
           top3: ranking.slice(0, 3),
-          topThemesSummary: summarizeThemes(topThemes),
         }
       }
       return {
         phase: 'resume',
-        currentIndex: p.currentIndex,
+        currentIndex: initialIndex,
         answers: p.answers,
         startedAt: p.startedAt,
         top3: [],
-        topThemesSummary: '',
       }
     }
     case 'BEGIN':
       return {
         ...makeInitialState(),
         phase: 'quiz',
+        currentIndex: initialIndex,
         startedAt: new Date().toISOString(),
       }
     case 'RESUME':
       return { ...state, phase: 'quiz' }
     case 'ANSWER': {
-      const answers = [...state.answers]
-      answers[state.currentIndex] = action.optionIndex
-      const next = state.currentIndex + 1
-      if (next >= TOTAL) {
-        return { ...state, answers, phase: 'quiz' }
+      const currentQuestion = questions[state.currentIndex]
+      const nextIndex = Math.min(state.currentIndex + 1, TOTAL - 1)
+      return {
+        ...state,
+        answers: {
+          ...state.answers,
+          [currentQuestion.id]: action.optionId,
+        },
+        currentIndex: nextIndex,
       }
-      return { ...state, answers, currentIndex: next }
     }
     case 'PREV':
       return {
@@ -89,17 +111,21 @@ function reducer(state: QuizState, action: Action): QuizState {
         currentIndex: Math.max(0, state.currentIndex - 1),
       }
     case 'SUBMIT': {
-      const { ranking, topThemes } = rankPersonas(state.answers)
+      const { ranking } = rankPersonas(state.answers)
       return {
         ...state,
         phase: 'result',
         top3: ranking.slice(0, 3),
-        topThemesSummary: summarizeThemes(topThemes),
       }
     }
     case 'RESTART': {
       clearState()
-      return makeInitialState()
+      return {
+        ...makeInitialState(),
+        phase: 'quiz',
+        currentIndex: initialIndex,
+        startedAt: new Date().toISOString(),
+      }
     }
     default:
       return state
@@ -110,7 +136,7 @@ export function useQuiz() {
   const [state, dispatch] = useReducer(reducer, undefined, makeInitialState)
 
   useEffect(() => {
-    const persisted = loadState(TOTAL)
+    const persisted = loadState()
     if (persisted) {
       dispatch({ type: 'LOAD', persisted })
     }
@@ -119,10 +145,9 @@ export function useQuiz() {
   useEffect(() => {
     if (state.phase === 'quiz' || state.phase === 'result') {
       saveState({
-        schemaVersion: 1,
+        schemaVersion: 2,
         startedAt: state.startedAt,
         updatedAt: new Date().toISOString(),
-        currentIndex: state.currentIndex,
         answers: state.answers,
         ...(state.phase === 'result'
           ? {
@@ -132,12 +157,12 @@ export function useQuiz() {
           : {}),
       })
     }
-  }, [state.phase, state.currentIndex, state.answers, state.startedAt, state.top3])
+  }, [state.phase, state.answers, state.startedAt, state.top3])
 
   const begin = useCallback(() => dispatch({ type: 'BEGIN' }), [])
   const resume = useCallback(() => dispatch({ type: 'RESUME' }), [])
   const answer = useCallback(
-    (optionIndex: number) => dispatch({ type: 'ANSWER', optionIndex }),
+    (optionId: QuestionOptionId) => dispatch({ type: 'ANSWER', optionId }),
     [],
   )
   const prev = useCallback(() => dispatch({ type: 'PREV' }), [])
@@ -145,10 +170,11 @@ export function useQuiz() {
   const restart = useCallback(() => dispatch({ type: 'RESTART' }), [])
 
   const currentQuestion = questions[state.currentIndex]
-  const currentAnswer = state.answers[state.currentIndex]
-  const answeredCount = state.answers.filter((a) => a !== null).length
+  const currentAnswer = currentQuestion ? state.answers[currentQuestion.id] ?? null : null
+  const answeredCount = Object.keys(state.answers).length
   const allAnswered = answeredCount === TOTAL
   const progress = Math.round((answeredCount / TOTAL) * 100)
+  const currentIndex = state.currentIndex
 
   return {
     state,
@@ -156,6 +182,7 @@ export function useQuiz() {
     currentAnswer,
     answeredCount,
     allAnswered,
+    currentIndex,
     progress,
     total: TOTAL,
     begin,

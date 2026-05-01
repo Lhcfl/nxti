@@ -9,6 +9,7 @@ export default function App() {
     state,
     currentQuestion,
     currentAnswer,
+    currentIndex,
     answeredCount,
     allAnswered,
     progress,
@@ -21,7 +22,9 @@ export default function App() {
     restart,
   } = useQuiz()
 
-  const { phase, currentIndex, top3, topThemesSummary } = state
+  const { phase, top3 } = state
+  const currentQuestionNumber = currentIndex + 1
+  const isLast = currentQuestionNumber === total
 
   // ── Start page ──────────────────────────────────────────────────────────────
   if (phase === 'start') {
@@ -65,7 +68,7 @@ export default function App() {
               发现上次的进度
             </h2>
             <p className="text-sm text-[var(--text)]">
-              你已经答到第 {currentIndex + 1} 题，要继续还是重来？
+              你已经答到第 {currentQuestionNumber} 题，要继续还是重来？
             </p>
           </div>
           <ProgressBar current={answeredCount} total={total} percent={progress} />
@@ -92,15 +95,14 @@ export default function App() {
 
   // ── Quiz ─────────────────────────────────────────────────────────────────────
   if (phase === 'quiz') {
-    const isLast = currentIndex === total - 1
     return (
       <main className="quiz-shell">
         <div className="quiz-content flex flex-col gap-6">
           <ProgressBar current={answeredCount} total={total} percent={progress} />
           <QuestionCard
             question={currentQuestion}
-            selectedIndex={currentAnswer ?? null}
-            questionNumber={currentIndex + 1}
+            selectedOptionId={currentAnswer ?? null}
+            questionNumber={currentQuestionNumber}
             total={total}
             onAnswer={answer}
             onPrev={prev}
@@ -130,9 +132,7 @@ export default function App() {
           <h1 className="text-2xl font-semibold text-[var(--text-h)]">
             {top3[0]?.persona.title}
           </h1>
-          <p className="text-sm text-[var(--text)]">
-            主题倾向：{topThemesSummary}
-          </p>
+          <p className="text-sm text-[var(--text)]">娱乐向匹配结果，仅供参考。</p>
         </div>
 
         <div className="flex flex-col gap-4">
@@ -143,7 +143,7 @@ export default function App() {
 
         <div className="border-t border-[var(--border)] pt-4 flex flex-col gap-3 items-center text-center">
           <p className="text-xs text-[var(--text)] opacity-70">
-            结果基于 {questions.length} 题隐藏维度加权匹配，仅供娱乐 :3
+            结果基于 {questions.length} 题加权匹配，仅供娱乐，大多 AI 生成，请勿当真
           </p>
           <button
             type="button"
