@@ -11,7 +11,7 @@ export const themes = [
 export type Theme = (typeof themes)[number]
 
 export type PersonaId =
-  | 'NERD'
+  | 'SPEC'
   | 'PLM'
   | 'FPL'
   | 'ARCH'
@@ -23,14 +23,16 @@ export type PersonaId =
   | 'ENV'
   | 'LBRD'
   | 'RICE'
-  | 'FLAKE'
-  | 'CACHE'
+  | 'AESTH'
   | 'PKGX'
   | 'REPRO'
-  | 'FIXER'
-  | 'DOCS'
   | 'HOME'
   | 'BOOT'
+  | 'NEWBIE'
+  | 'SHELLU'
+  | 'MINI'
+  | 'COOL'
+  | 'WIN'
 
 export type ScoreDelta = Partial<Record<PersonaId, number>>
 export type ThemeVector = Partial<Record<Theme, number>>
@@ -38,14 +40,14 @@ export type ThemeVector = Partial<Record<Theme, number>>
 export type QuestionOption = {
   id: 'A' | 'B' | 'C' | 'D'
   text: string
-  effect: ScoreDelta
+  effect?: ScoreDelta
   vibe?: ThemeVector
 }
 
 export type Question = {
-  id: number
+  id: string | number
   prompt: string
-  theme: Theme
+  theme?: Theme
   options: QuestionOption[]
 }
 
@@ -56,7 +58,6 @@ export type Persona = {
   subtitle: string
   description: string
   tags: string[]
-  recommendation: string
   anchors: string[]
   baseScore?: number
   themeAffinity?: ThemeVector

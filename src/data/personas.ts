@@ -2,14 +2,13 @@ import type { Persona } from '../types'
 
 export const personas: Persona[] = [
   {
-    id: 'NERD',
-    code: 'NERD',
-    title: '手册背诵型书呆子',
+    id: 'SPEC',
+    code: 'SPEC',
+    title: 'Nix 专家',
     subtitle: '你不是在用 Nix，你在考 Nix 三级',
     description:
       '你对细节有异乎寻常的耐心，愿意为了一个更严格的定义多写三层配置。别人看见你会问怎么入门，你看见别人会问是否读过手册附录。',
     tags: ['规范控', '文档重度用户', '长线主义'],
-    recommendation: '继续保持，但记得给队友准备一份十分钟版说明。',
     anchors: ['你倾向先查文档再动手', '你会主动整理知识结构', '你在意行为的可解释性'],
     baseScore: 1,
     themeAffinity: { philosophy: 1.3, culture: 0.9, dx: 0.3 },
@@ -17,12 +16,11 @@ export const personas: Persona[] = [
   {
     id: 'PLM',
     code: 'PLMaster',
-    title: '类型神谕 PL 达人',
+    title: 'PL 达人',
     subtitle: '你写配置时像在写论文摘要',
     description:
       '你喜欢用抽象表达一致性，把配置看成可证明的系统。每次重构都像在给未来的自己发一张免排障券。',
     tags: ['抽象派', '类型偏执', '证明欲'],
-    recommendation: '抽象很美，给项目留一条新手通道更美。',
     anchors: ['你偏好声明式推导', '你愿意为一致性投资', '你乐于构建可复用模块'],
     baseScore: 0.8,
     themeAffinity: { philosophy: 1.1, immutability: 1.4, dx: 0.6 },
@@ -35,20 +33,18 @@ export const personas: Persona[] = [
     description:
       '你对可预测性几乎有信仰级需求。你相信系统应当像纯函数一样输入决定输出，哪怕为了这点需要多写一点样板。',
     tags: ['纯函数气质', '可预测第一', '拒绝魔法'],
-    recommendation: '保持原则，同时允许少量工程化折中。',
     anchors: ['你天然偏好不可变状态', '你把复现作为基础要求', '你对隐藏副作用敏感'],
     baseScore: 1.2,
     themeAffinity: { immutability: 1.7, packaging: 0.7, philosophy: 0.5 },
   },
   {
     id: 'ARCH',
-    code: 'ARCH',
-    title: '隔壁 Arch 观察员',
+    code: 'Arch',
+    title: '隔壁 Arch 用户',
     subtitle: '你追求控制感，顺手追求一点风险',
     description:
       '你享受系统透明、层次清晰、可以亲手雕刻的感觉。你对折腾并不排斥，甚至在某些夜晚会主动找点折腾。',
     tags: ['控制欲', '折腾体质', '自主可控'],
-    recommendation: '控制感很重要，但备份同样重要。',
     anchors: ['你喜欢可定制的底层', '你愿意主动排查疑难问题', '你重视系统掌控权'],
     baseScore: 0.7,
     themeAffinity: { culture: 1.3, packaging: 1.1, dx: 0.2 },
@@ -56,13 +52,12 @@ export const personas: Persona[] = [
   {
     id: 'XYN',
     code: 'XYN',
-    title: '中文 NixOS 小药娘',
+    title: '小药娘',
     subtitle: '雌二醇与 derivation，一样都不能少',
     description:
-      '你是中文 NixOS 社区里那个既在认真 debug flake.lock、又在群里发可爱 sticker 的那位。你早就出柜了，包括对 Nix 出柜——两件事你都选择了最麻烦但最适合自己的那条路。你的 home-manager 配置里有 estrogen，你的 commit 信息里有 uwu。社区因为有你们更好玩。',
-    tags: ['小药娘', 'uwu', '中文 NixOS 社区'],
-    recommendation: '继续做自己，顺手把配置也分享出来。',
-    anchors: ['你是社区里公开出柜的跨性别女性', '你把 Nix 和个人表达融合得很自然', '你为中文 Nix 社区带来了独特的氛围'],
+      '社区因为有你们更好玩。',
+    tags: ['小药娘', 'uwu', '🍥️'],
+    anchors: ['为什么这个选项会混进来？', '你为中文 Nix 社区带来了独特的氛围'],
     baseScore: 0.5,
     themeAffinity: { culture: 1.8, dx: 0.4 },
   },
@@ -74,7 +69,6 @@ export const personas: Persona[] = [
     description:
       '你关注每一秒构建时间和每一点运行开销。你追求的是可测量收益，不是玄学优化。你会为了基准测试写脚本。',
     tags: ['性能优先', '基准党', '指标驱动'],
-    recommendation: '别忘了把优化收益写进文档，方便团队复用。',
     anchors: ['你愿意为性能调优投入时间', '你对缓存命中率敏感', '你习惯用数据说话'],
     baseScore: 1,
     themeAffinity: { packaging: 1.2, devops: 1, constraint: 0.6 },
@@ -87,7 +81,6 @@ export const personas: Persona[] = [
     description:
       '你往往从一次机缘巧合进入生态，然后边用边学。你对不确定性耐受度高，能在混沌中摸到一条可用路径。',
     tags: ['直觉驱动', '适应力强', '先跑再说'],
-    recommendation: '把你摸索出的经验沉淀下来，会非常有价值。',
     anchors: ['你不依赖预设路线', '你对新工具好奇', '你能在不完整信息下前进'],
     baseScore: 0.6,
     themeAffinity: { culture: 0.9, dx: 0.8, philosophy: 0.2 },
@@ -100,7 +93,6 @@ export const personas: Persona[] = [
     description:
       '你不追求概念最纯粹，只追求问题被稳稳解决。你愿意在理想和现实之间做可维护的折中。',
     tags: ['交付导向', '稳健折中', '结果优先'],
-    recommendation: '继续保持节奏，偶尔预留一点技术债窗口。',
     anchors: ['你优先考虑业务影响', '你关注可维护成本', '你会主动平衡理想与时间'],
     baseScore: 1.2,
     themeAffinity: { constraint: 1.1, devops: 0.8, dx: 0.8 },
@@ -113,7 +105,6 @@ export const personas: Persona[] = [
     description:
       '你关注系统从开发到生产的完整链路。你习惯把偶发问题改造成自动化流程，减少下次的人类痛苦。',
     tags: ['自动化', '平台思维', '稳定性工程'],
-    recommendation: '继续推进平台化，同时注意保留应急手册。',
     anchors: ['你乐于搭建 CI/CD', '你重视可观测与回滚', '你追求流程标准化'],
     baseScore: 1,
     themeAffinity: { devops: 1.9, packaging: 0.8, constraint: 0.7 },
@@ -126,7 +117,6 @@ export const personas: Persona[] = [
     description:
       '你最看重的是团队环境一致，不希望再有人说在我机器上没问题。你把工具链当基础设施，而不是一次性脚本。',
     tags: ['环境一致性', '团队协作', '工具链治理'],
-    recommendation: '很好，顺手把常见入口命令也统一掉。',
     anchors: ['你优先解决环境漂移', '你在意新成员上手速度', '你会封装统一开发入口'],
     baseScore: 0.9,
     themeAffinity: { dx: 1.4, constraint: 0.9, devops: 0.8 },
@@ -134,12 +124,11 @@ export const personas: Persona[] = [
   {
     id: 'LBRD',
     code: 'LBRD',
-    title: '老板安排被动型',
+    title: '老板让的',
     subtitle: '你不是自来水，是 KPI 水',
     description:
       '你对工具没有强烈执念，更在意项目目标是否达成。虽然起步被动，但通常能很快找到最低摩擦的工作方式。',
     tags: ['任务驱动', '低摩擦策略', '现实主义'],
-    recommendation: '多记录你的迁移经验，会成为团队宝贵资产。',
     anchors: ['你更看重组织决策', '你习惯在约束中找路径', '你会优先减少协作摩擦'],
     baseScore: 0.7,
     themeAffinity: { constraint: 1.8, dx: 0.5 },
@@ -147,41 +136,14 @@ export const personas: Persona[] = [
   {
     id: 'RICE',
     code: 'RICE',
-    title: 'Rice 仙人',
+    title: '美化狂人',
     subtitle: '你的配置首先要好看，其次才是能跑',
     description:
       '你热爱界面和细节，愿意花时间打磨终端体验。你相信好的视觉反馈会提高长期使用幸福感。',
     tags: ['审美驱动', '终端美化', '体验主义'],
-    recommendation: '视觉很重要，记得保留一键回退和默认主题。',
     anchors: ['你会主动美化开发环境', '你对界面细节敏感', '你喜欢可个性化工具链'],
     baseScore: 0.5,
     themeAffinity: { culture: 1.4, dx: 1.2 },
-  },
-  {
-    id: 'FLAKE',
-    code: 'FLAKE',
-    title: 'Flake 传教士',
-    subtitle: '你只相信可锁定、可复制、可巡回布道',
-    description:
-      '你对版本锁定和依赖追踪有强烈安全感。任何不确定输入都会让你下意识想加一个 lock 文件。',
-    tags: ['锁定狂喜', '可复现布道', '组织标准化'],
-    recommendation: '把理念配上实战案例，更容易说服同伴。',
-    anchors: ['你强调依赖锁定', '你偏好标准化入口', '你希望环境可复制'],
-    baseScore: 1,
-    themeAffinity: { immutability: 1.1, devops: 1.2, philosophy: 0.7 },
-  },
-  {
-    id: 'CACHE',
-    code: 'CACHE',
-    title: '二进制缓存骑士',
-    subtitle: '你的人生目标是少编译一万次',
-    description:
-      '你擅长让团队省时间，把重复劳动压缩到最低。你对缓存策略有近乎本能的热情，看到 miss 会心痛。',
-    tags: ['缓存策略', '效率工程', '团队节流'],
-    recommendation: '继续优化缓存路径，顺便监控命中率趋势。',
-    anchors: ['你高度关注缓存命中', '你会主动建设缓存基础设施', '你偏爱减少重复构建'],
-    baseScore: 0.8,
-    themeAffinity: { packaging: 1.7, devops: 0.8 },
   },
   {
     id: 'PKGX',
@@ -191,7 +153,6 @@ export const personas: Persona[] = [
     description:
       '你愿意深入到包定义细节，修补上游和下游之间的接缝。别人看见报错想放弃，你看见报错想开工。',
     tags: ['打包狂热', '上游协作', '补丁体质'],
-    recommendation: '多沉淀模板，让后来者少踩坑。',
     anchors: ['你不怕维护包定义', '你能快速定位构建失败点', '你重视生态兼容性'],
     baseScore: 0.9,
     themeAffinity: { packaging: 1.8, philosophy: 0.6, devops: 0.4 },
@@ -204,36 +165,9 @@ export const personas: Persona[] = [
     description:
       '你无法忍受同一份代码在不同机器上出现不同命运。你倾向先搭建验证框架，再开始大规模开发。',
     tags: ['一致性审计', '验证优先', '风险控制'],
-    recommendation: '继续严谨，也可以为轻量场景提供快速模式。',
     anchors: ['你先验证再扩展', '你注重跨机器一致', '你对漂移高度敏感'],
     baseScore: 1,
     themeAffinity: { immutability: 1.6, devops: 0.7, constraint: 0.6 },
-  },
-  {
-    id: 'FIXER',
-    code: 'FIXER',
-    title: '救火补丁急救员',
-    subtitle: '你总能在凌晨前把 CI 拉回绿色',
-    description:
-      '你擅长在紧急时刻快速定位问题并给出可执行修复。你可能不追求最优雅，但一定追求可落地。',
-    tags: ['故障处理', '快速修复', '韧性工程'],
-    recommendation: '每次救火后留一份复盘，避免重复夜战。',
-    anchors: ['你优先恢复系统可用性', '你善于快速定位问题', '你对线上风险反应迅速'],
-    baseScore: 0.9,
-    themeAffinity: { constraint: 1.2, devops: 1.1, dx: 0.3 },
-  },
-  {
-    id: 'DOCS',
-    code: 'DOCS',
-    title: '文档牧师',
-    subtitle: '你相信一句好文档能省三小时语音会',
-    description:
-      '你重视知识可传递性，习惯把隐性经验变成可搜索的公共资产。你的项目通常接手成本更低。',
-    tags: ['知识管理', '可传递性', '团队效率'],
-    recommendation: '继续写，顺手做一份常见问题导航。',
-    anchors: ['你习惯沉淀实践经验', '你重视团队共享知识', '你追求长期可维护性'],
-    baseScore: 0.8,
-    themeAffinity: { dx: 1.4, culture: 0.9, constraint: 0.5 },
   },
   {
     id: 'HOME',
@@ -243,7 +177,6 @@ export const personas: Persona[] = [
     description:
       '你不只关心项目，更关心个人工作台的稳定演化。你希望每台机器都能快速还原熟悉手感。',
     tags: ['个人基础设施', 'dotfiles 治理', '迁移友好'],
-    recommendation: '加上最小化配置选项，便于新设备冷启动。',
     anchors: ['你愿意管理个人工作环境', '你追求跨设备一致体验', '你重视长期演化能力'],
     baseScore: 0.7,
     themeAffinity: { dx: 1.5, culture: 0.5, immutability: 0.7 },
@@ -256,10 +189,69 @@ export const personas: Persona[] = [
     description:
       '你不害怕从零开始，反而享受重新定义系统的过程。你善于快速搭建新机并把经验固化成脚本。',
     tags: ['重建能力', '自动化恢复', '实验精神'],
-    recommendation: '记得准备恢复清单，让无畏更可控。',
     anchors: ['你对重建系统不焦虑', '你偏好自动化安装流程', '你愿意持续迭代基础配置'],
     baseScore: 0.6,
     themeAffinity: { devops: 1, culture: 0.8, packaging: 0.9 },
+  },
+  {
+    id: 'NEWBIE',
+    code: 'NEWBIE',
+    title: 'Nix 新手村村民',
+    subtitle: '第一次看到 derivation 就觉得脑袋要裂开',
+    description:
+      '你刚踏进 Nix 的大门，还不确定自己为什么要进来。flake.nix 打开了又关上，手册翻了三页发现全是新词。但你已经跑通了第一个 nix-shell，这就够了——每个老手都从这里开始的。',
+    tags: ['刚入坑', '摸索中', '充满好奇'],
+    anchors: ['你对 Nix 生态还很陌生', '你靠搜索和社区问答摸索前进', '你愿意折腾只是还没找到方向'],
+    baseScore: 0.4,
+    themeAffinity: { culture: 1.0, dx: 0.9, constraint: 0.5 },
+  },
+  {
+    id: 'SHELLU',
+    code: 'SHELLU',
+    title: 'nix-shell 轻度试用者',
+    subtitle: '你用 Nix 装软件，但你的项目和 Nix 没什么关系',
+    description:
+      '你发现 nix-shell 是个神奇的一次性工具箱：想用 ffmpeg 的时候 nix-shell -p ffmpeg，用完就走，干干净净。你不关心 flake、不关心 derivation，也不想管理任何配置文件。Nix 对你来说是个高级版 brew，是临时环境的魔法——这已经足够了。',
+    tags: ['按需取用', '零配置主义', '工具即插即用'],
+    anchors: ['你习惯用 nix-shell -p 按需取用工具', '你不希望 Nix 渗透进项目配置', '你看重工具的即插即走特性'],
+    baseScore: 0.45,
+    themeAffinity: { dx: 1.6, culture: 0.7, constraint: 0.4 },
+  },
+  {
+    id: 'MINI',
+    code: 'MINI',
+    title: '极简主义者',
+    subtitle: '配置越少越好，能删就删',
+    description:
+      '你对膨胀有近乎本能的排斥。你的 flake.nix 只有几十行，依赖列表看起来像极简风的购物单。你不是懒——你是刻意在抵抗复杂度。你知道每一行配置都是未来的维护成本，所以你的原则是：没有明确需要，就不加。',
+    tags: ['少即是多', '低依赖', '抗膨胀'],
+    anchors: ['你倾向保持配置最小化', '你对引入新依赖持审慎态度', '你认为简单系统比完备系统更可靠'],
+    baseScore: 0.55,
+    themeAffinity: { philosophy: 1.4, dx: 1.1, immutability: 0.6 },
+  },
+  {
+    id: 'COOL',
+    code: 'COOL',
+    title: '酷炫技术追光者',
+    subtitle: '别问为什么用 Nix，问就是看起来很酷',
+    description:
+      '你的技术选型标准很简单：这东西酷不酷？Nix 有纯函数式包管理、可复现构建、flake 锁定——光是把这些词说出来就让人肃然起敬。你不一定完全理解底层原理，但你享受使用前沿工具带来的那种感觉。有时候动力本身就是审美，这没什么问题。',
+    tags: ['潮流嗅觉', '技术审美', '酷即正义'],
+    anchors: ['你被 Nix 的概念和气质吸引', '你喜欢使用看起来前沿的工具', '你把技术选择也当作一种品味表达'],
+    baseScore: 0.5,
+    themeAffinity: { culture: 1.6, dx: 0.9, philosophy: 0.5 },
+  },
+  {
+    id: 'WIN',
+    code: 'WIN',
+    title: '这年头谁用 Linux 啊',
+    subtitle: '主力 Windows，偶尔开个 WSL 感受一下 Nix 的气息',
+    description:
+      '你的主力机是 Windows，桌面是任务栏，浏览器是 Edge，但你在 WSL 里装了 Nix 并且认为这挺不错的。你不需要 NixOS，也没打算迁移——你只是想在不破坏主系统的前提下用用这个传说中的工具。双系统太麻烦，虚拟机太重，WSL 刚好。',
+    tags: ['Windows 主力', 'WSL 用户', '非破坏性试用'],
+    anchors: ['你的日常工作在 Windows 上进行', '你通过 WSL 接触 Nix 而非原生 Linux', '你偏好不破坏主系统的使用方式'],
+    baseScore: 0.4,
+    themeAffinity: { constraint: 1.3, dx: 1.2, culture: 0.6 },
   },
 ]
 

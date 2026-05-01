@@ -70,11 +70,15 @@ export function rankPersonas(answers: Array<number | null>): {
       return
     }
 
-    themeBoard[question.theme] += 1
+    if (question.theme) {
+      themeBoard[question.theme] += 1
+    }
 
-    Object.entries(option.effect).forEach(([personaId, delta]) => {
-      scoreboard[personaId as PersonaId] += delta ?? 0
-    })
+    if (option.effect) {
+      Object.entries(option.effect).forEach(([personaId, delta]) => {
+        scoreboard[personaId as PersonaId] += delta ?? 0
+      })
+    }
 
     if (option.vibe) {
       Object.entries(option.vibe).forEach(([theme, score]) => {
