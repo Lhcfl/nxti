@@ -22,7 +22,7 @@ export default function App() {
     restart,
   } = useQuiz()
 
-  const { phase, top3 } = state
+  const { phase, topResults } = state
   const currentQuestionNumber = currentIndex + 1
   const isLast = currentQuestionNumber === total
 
@@ -130,13 +130,13 @@ export default function App() {
             NXTI 测试结果
           </p>
           <h1 className="text-2xl font-semibold text-[var(--text-h)]">
-            {top3[0]?.persona.title}
+            {topResults[0]?.persona.title}
           </h1>
           <p className="text-sm text-[var(--text)]">娱乐向匹配结果，仅供参考。</p>
         </div>
 
         <div className="flex flex-col gap-4">
-          {top3.map((ranked, index) => (
+          {topResults.map((ranked, index) => (
             <PersonaCard key={ranked.persona.id} ranked={ranked} rank={index} />
           ))}
         </div>

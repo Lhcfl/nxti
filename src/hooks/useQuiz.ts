@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer } from 'react'
 import { questions as questions_original } from '../data/questions'
-import { getTopThree, rankPersonas } from '../lib/scoring'
+import { rankPersonas } from '../lib/scoring'
 import {
   clearState,
   loadState,
@@ -39,6 +39,7 @@ const [questions, initialIndex] = (() => {
 })()
 
 const TOTAL = questions.length
+const TOP_RESULT_COUNT = 5
 
 type Phase = 'start' | 'resume' | 'quiz' | 'result'
 
@@ -48,7 +49,7 @@ export type QuizState = {
   maxReachedIndex: number
   answers: AnswerMap
   startedAt: string
-  top3: RankedPersona[]
+  topResults: RankedPersona[]
 }
 
 type Action =
@@ -67,7 +68,7 @@ function makeInitialState(): QuizState {
     maxReachedIndex: 0,
     answers: {},
     startedAt: '',
-    top3: [],
+    topResults: [],
   }
 }
 
@@ -83,7 +84,7 @@ function reducer(state: QuizState, action: Action): QuizState {
           maxReachedIndex: initialIndex,
           answers: p.answers,
           startedAt: p.startedAt,
-          top3: ranking.slice(0, 3),
+          topResults: ranking.slice(0, TOP_RESULT_COUNT),
         }
       }
       return {
@@ -92,7 +93,7 @@ function reducer(state: QuizState, action: Action): QuizState {
         maxReachedIndex: initialIndex,
         answers: p.answers,
         startedAt: p.startedAt,
-        top3: [],
+        topResults: [],
       }
     }
     case 'BEGIN':
@@ -128,7 +129,7 @@ function reducer(state: QuizState, action: Action): QuizState {
       return {
         ...state,
         phase: 'result',
-        top3: ranking.slice(0, 3),
+        topResults: ranking.slice(0, TOP_RESULT_COUNT),
       }
     }
     case 'RESTART': {
@@ -171,12 +172,12 @@ export function useQuiz() {
         ...(state.phase === 'result'
           ? {
               finishedAt: new Date().toISOString(),
-              topResultCodes: state.top3.map((r) => r.persona.code),
+              topResultCodes: state.topResults.map((r) => r.persona.code),
             }
           : {}),
       })
     }
-  }, [state.phase, state.answers, state.startedAt, state.top3])
+  }, [state.phase, state.answers, state.startedAt, state.topResults])
 
   const begin = useCallback(() => dispatch({ type: 'BEGIN' }), [])
   const resume = useCallback(() => dispatch({ type: 'RESUME' }), [])
@@ -215,4 +216,3 @@ export function useQuiz() {
   }
 }
 
-export { getTopThree }

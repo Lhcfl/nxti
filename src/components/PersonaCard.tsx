@@ -5,8 +5,8 @@ type Props = {
   rank: number
 }
 
-const rankEmoji = ['🥇', '🥈', '🥉']
-const rankLabel = ['主人格', '次人格', '隐藏面']
+const rankEmoji = ['🥇', '🥈', '🥉', '🏅', '🎖️']
+const rankLabel = ['主人格', '次人格', '隐藏面', '补充人格', '潜在人格']
 
 export function PersonaCard({ ranked, rank }: Props) {
   const { persona } = ranked
@@ -24,9 +24,9 @@ export function PersonaCard({ ranked, rank }: Props) {
       <div className="flex items-start justify-between gap-2">
         <div>
           <div className="flex items-center gap-2 mb-0.5">
-            <span className="text-lg">{rankEmoji[rank]}</span>
+            <span className="text-lg">{rankEmoji[rank] ?? '🏅'}</span>
             <span className="text-xs font-mono text-[var(--text)] border border-[var(--border)] rounded px-1.5 py-0.5">
-              {rankLabel[rank]}
+              {rankLabel[rank] ?? `第 ${rank + 1} 人格`}
             </span>
           </div>
           <h2 className="text-lg font-semibold text-[var(--text-h)] leading-tight mt-1">

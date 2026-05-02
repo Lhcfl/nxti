@@ -3,6 +3,7 @@ import { questions } from '../data/questions'
 import type { AnswerMap, PersonaId, RankedPersona } from '../types'
 
 const reasonLimit = 3
+const TOP_RESULT_COUNT = 5
 
 type Scoreboard = Record<PersonaId, number>
 
@@ -87,7 +88,11 @@ export function rankPersonas(answers: AnswerMap): { ranking: RankedPersona[] } {
   return { ranking }
 }
 
-export function getTopThree(answers: AnswerMap): RankedPersona[] {
+export function getTopFive(answers: AnswerMap): RankedPersona[] {
   const { ranking } = rankPersonas(answers)
-  return ranking.slice(0, 3)
+  return ranking.slice(0, TOP_RESULT_COUNT)
+}
+
+export function getTopThree(answers: AnswerMap): RankedPersona[] {
+  return getTopFive(answers)
 }
