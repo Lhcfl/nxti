@@ -31,7 +31,8 @@ const [questions, initialIndex] = (() => {
     // 已答题放前面，未答题放后面
     const answered = shuffled.filter((q) => state.answers[q.id])
     const unanswered = shuffled.filter((q) => !state.answers[q.id])
-    return [[...answered, ...unanswered], answered.length]
+    const resumeIndex = Math.min(answered.length, Math.max(shuffled.length - 1, 0))
+    return [[...answered, ...unanswered], resumeIndex]
   }
 
   return [shuffled, 0]
@@ -98,8 +99,8 @@ function reducer(state: QuizState, action: Action): QuizState {
       return {
         ...makeInitialState(),
         phase: 'quiz',
-        currentIndex: initialIndex,
-        maxReachedIndex: initialIndex,
+        currentIndex: 0,
+        maxReachedIndex: 0,
         startedAt: new Date().toISOString(),
       }
     case 'RESUME':
@@ -135,8 +136,8 @@ function reducer(state: QuizState, action: Action): QuizState {
       return {
         ...makeInitialState(),
         phase: 'quiz',
-        currentIndex: initialIndex,
-        maxReachedIndex: initialIndex,
+        currentIndex: 0,
+        maxReachedIndex: 0,
         startedAt: new Date().toISOString(),
       }
     }
@@ -151,6 +152,11 @@ export function useQuiz() {
   useEffect(() => {
     const persisted = loadState()
     if (persisted) {
+      const hasAnswered = Object.keys(persisted.answers).length > 0
+      if (!hasAnswered && !persisted.finishedAt) {
+        clearState()
+        return
+      }
       dispatch({ type: 'LOAD', persisted })
     }
   }, [])
