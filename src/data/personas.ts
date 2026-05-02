@@ -49,7 +49,7 @@ export const personas: Persona[] = [
     description:
       '社区因为有你们更好玩。',
     tags: ['小药娘', 'uwu', '🍥️'],
-    anchors: ['为什么这个选项会混进来？', '你为中文 Nix 社区带来了独特的氛围'],
+    anchors: ['你为中文 Nix 社区带来了独特的氛围', '但是，为什么这个选项会混进来？'],
   },
   {
     id: 'PERF',

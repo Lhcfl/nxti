@@ -143,7 +143,7 @@ export default function App() {
 
         <div className="border-t border-[var(--border)] pt-4 flex flex-col gap-3 items-center text-center">
           <p className="text-xs text-[var(--text)] opacity-70">
-            结果基于 {questions.length} 题加权匹配，仅供娱乐，大多 AI 生成，请勿当真
+            结果基于 {questions.length} 题加权匹配，仅供娱乐，AI 生成，请勿当真
           </p>
           <button
             type="button"
