@@ -51,7 +51,8 @@ export type Question = {
   id: QuestionId
   prompt: string
   theme?: Theme
-  options: QuestionOption[]
+  options: QuestionOption[],
+  special?: "dont-first" // 这个题目不适合放在第一题或最后一题
 }
 
 export type Persona = {

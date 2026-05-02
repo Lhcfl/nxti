@@ -13,6 +13,12 @@ const [questions, initialIndex] = (() => {
   // 打乱题目顺序
   const shuffled = [...questions_original].sort(() => Math.random() - 0.5)
 
+  if (shuffled[0].special === 'dont-first') {
+    const it = shuffled[0];
+    shuffled[0] = shuffled.at(-3)!;
+    shuffled[shuffled.length - 3] = it;
+  }
+
   // 打乱每个题目的选项
   for (const question of shuffled) {
     question.options.sort(() => Math.random() - 0.5)

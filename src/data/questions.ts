@@ -28,7 +28,7 @@ export const questions: Question[] = [
       { id: 'A', text: '发一份入门指南和 FAQ', effect: { SPEC: 2, NEWBIE: 1 } },
       { id: 'B', text: '当能工智人，耐心解释和引导 Nix 如何使用', effect: { ENV: 2, PRAG: 1 } },
       { id: 'C', text: '“Nix 不是有手就行？”', effect: { COOL: 1, ARCH: 1, IDK: 1 } },
-      { id: 'D', text: '确实很难，我退坑了（掀桌）', effect: { WIN: 2, IDK: 1 } },
+      { id: 'D', text: '确实很难，我退坑了（掀桌）', effect: { WIN: 1, ARCH: 1, IDK: 1 } },
     ],
   },
   {
@@ -38,7 +38,7 @@ export const questions: Question[] = [
       { id: 'A', text: '重构成纯函数流', effect: { FPL: 3, PLM: 1 } },
       { id: 'B', text: '写个测试/文档把风险圈住', effect: { REPRO: 2, SPEC: 1 } },
       { id: 'C', text: '能跑先跑，有问题再说', effect: { PRAG: 2, LBRD: 1 } },
-      { id: 'D', text: '这年头谁写 immutable 啊，你嫌不纯我还嫌费事呢', effect: { IDK: 1, WIN: 1, PRAG: 1 } },
+      { id: 'D', text: '这年头谁写 immutable 啊，你嫌不纯我还嫌费事呢', effect: { IDK: 1, PRAG: 1 } },
     ],
   },
   {
@@ -47,7 +47,7 @@ export const questions: Question[] = [
     options: [
       { id: 'A', text: '本地全编译，参数拉满，写一堆 derivation', effect: { PKGX: 2, PERF: 1, REPRO: 1 } },
       { id: 'B', text: '优先命中缓存，节约时间', effect: { PERF: 2, DOPS: 1 } },
-      { id: 'C', text: '我只要别人事先构建好的二进制文件', effect: { PRAG: 2, WIN: 1 } },
+      { id: 'C', text: '我只要别人事先构建好的二进制文件', effect: { PRAG: 2 } },
       { id: 'D', text: '不懂啊，我让 AI 给我写一个', effect: { NEWBIE: 1, IDK: 2 } },
     ],
   },
@@ -98,12 +98,12 @@ export const questions: Question[] = [
       { id: 'A', text: '推荐公司使用 nix: 展示 Nix 能带来多大的可靠性', effect: { ENV: 2, REPRO: 1 } },
       { id: 'B', text: '我是老板，我想引入什么就引入什么', effect: { LBRD: 2, PRAG: 1 } },
       { id: 'C', text: '从小的、不重要的地方试点', effect: { PRAG: 2, DOPS: 1 } },
-      { id: 'D', text: '老板让我用什么我就用什么', effect: { LBRD: 2, WIN: 1 } },
+      { id: 'D', text: '老板让我用什么我就用什么', effect: { LBRD: 2 } },
     ],
   },
   {
     id: "pain",
-    prompt: '你觉得下面场景种最痛苦的事情是？',
+    prompt: '你觉得下面场景中最痛苦的事情是？',
     options: [
       { id: 'A', text: '滚一下系统，滚炸了', effect: { REPRO: 2, NEWBIE: 1 } },
       { id: 'B', text: '构建慢得怀疑人生', effect: { PERF: 2, DOPS: 1 } },
@@ -115,7 +115,7 @@ export const questions: Question[] = [
     id: "system",
     prompt: '假如有人送你了一台 Surface（可以转赠和出二手），你会？',
     options: [
-      { id: 'A', text: '田字信仰，我选 Windows', effect: { WIN: 3 } },
+      { id: 'A', text: '田字信仰，我选 Windows', effect: { WIN: 8 } },
       { id: 'B', text: '什么 surface, NixOS 启动器罢了', effect: { REPRO: 1, ENV: 1, COOL: 1 } },
       { id: 'C', text: '什么 surface, Arch 启动器罢了', effect: { ARCH: 3 } },
       { id: 'D', text: '出掉，小破电脑一点都不适用', effect: { PRAG: 1, IDK: 1, MINI: 1 } },
@@ -126,7 +126,7 @@ export const questions: Question[] = [
     prompt: "有一天，Nix 和 NixOS 突然从地球上消失了……",
     options: [
       { id: 'A', text: '正好换回 pacman', effect: { ARCH: 2, PRAG: 1 } },
-      { id: 'B', text: '看来不得不用 Windows 了', effect: { WIN: 2, LBRD: 1 } },
+      { id: 'B', text: '看来不得不用 Windows 了', effect: { WIN: 5, LBRD: 1 } },
       { id: 'C', text: '我选 Guix ', effect: { FPL: 1, PLM: 1, SPEC: 1 } },
       { id: 'D', text: '哪个酷我用哪个', effect: { COOL: 2, IDK: 1 } },
     ]
@@ -146,7 +146,7 @@ export const questions: Question[] = [
     prompt: '遇到了一个软件 nixpkgs 上没有，但是有源码',
     options: [
       { id: 'A', text: '自己写 Nix 表达式打包，顺便做个贡献', effect: { PKGX: 3, SPEC: 1 } },
-      { id: 'B', text: 'flatpub，启动！', effect: { SHELLU: 1, PRAG: 1, IDK: 1 } },
+      { id: 'B', text: 'flatpub/docker，启动！', effect: { SHELLU: 1, PRAG: 1, IDK: 1 } },
       { id: 'C', text: '人生苦短 我用 Arch', effect: { ARCH: 2, COOL: 1 } },
       { id: 'D', text: '放弃，换其他软件', effect: { MINI: 1, IDK: 1, WIN: 1 } },
     ],
@@ -186,7 +186,7 @@ export const questions: Question[] = [
     prompt: '有一位朋友想要尝试入门 Nix，你推荐……',
     options: [
       { id: 'A', text: '从实践中一点点学习', effect: { NEWBIE: 2, PRAG: 1 } },
-      { id: 'B', text: '快跑，用什么 Nix', effect: { WIN: 1, ARCH: 1, IDK: 1 } },
+      { id: 'B', text: '快跑，用什么 Nix', effect: { WIN: 1, ARCH: 2, IDK: 1 } },
       { id: 'C', text: '先啃文档，免得踩坑', effect: { SPEC: 2, REPRO: 1 } },
       { id: 'D', text: '快！给你看看我的配置文件怎么写的', effect: { COOL: 2, RICE: 1 } },
     ],
@@ -206,8 +206,8 @@ export const questions: Question[] = [
     prompt: '朋友和你吐槽遇到了包依赖问题',
     options: [
       { id: 'A', text: '“来用 Nix 吧！”', effect: { ENV: 2, REPRO: 1 } },
-      { id: 'B', text: '“来用 Arch 吧！”', effect: { ARCH: 2, COOL: 1 } },
-      { id: 'C', text: '“来用 Windows 吧！”', effect: { WIN: 2, PRAG: 1 } },
+      { id: 'B', text: '“来用 Arch 吧！”', effect: { ARCH: 8, COOL: 1 } },
+      { id: 'C', text: '“来用 Windows 吧！”', effect: { WIN: 8, PRAG: 1 } },
       { id: 'D', text: '建议换一个软件包', effect: { PRAG: 2, MINI: 1 } },
     ],
   },
@@ -227,13 +227,14 @@ export const questions: Question[] = [
     options: [
       { id: 'A', text: '可重现性和可靠性', effect: { REPRO: 2, FPL: 1 } },
       { id: 'B', text: '声明式构建系统', effect: { PLM: 2, PKGX: 1 } },
-      { id: 'C', text: '拜托，函数式语言真的很酷', effect: { FPL: 2, COOL: 1 } },
+      { id: 'C', text: '拜托，Nix 语言真的很酷', effect: { FPL: 2, COOL: 1 } },
       { id: 'D', text: '图灵派男娘很多（雾）', effect: { XYN: 4, COOL: 1 } },
     ],
   },
   {
     id: "mtf",
     prompt: '你在吃雌二醇 🍥️',
+    special: "dont-first",
     options: [
       { id: 'A', text: '是的 😋️', effect: { XYN: 6 } },
       { id: 'B', text: '还没有，不过我有一个朋友……', effect: { XYN: 2, IDK: 1 } },
@@ -247,7 +248,7 @@ export const questions: Question[] = [
     options: [
       { id: 'A', text: 'NixOS', effect: { REPRO: 1, ENV: 1, FPL: 1 } },
       { id: 'B', text: '其他 Linux 比如 Arch', effect: { ARCH: 2, COOL: 1 } },
-      { id: 'C', text: 'Windows', effect: { WIN: 3 } },
+      { id: 'C', text: 'Windows', effect: { WIN: 8 } },
       { id: 'D', text: 'MacOS', effect: { RICE: 1, PRAG: 1, MINI: 1 } },
     ],
   },
