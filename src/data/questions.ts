@@ -27,7 +27,7 @@ export const questions: Question[] = [
     options: [
       { id: 'A', text: '发一份入门指南和 FAQ', effect: { SPEC: 2, NEWBIE: 1 } },
       { id: 'B', text: '当能工智人，耐心解释和引导 Nix 如何使用', effect: { ENV: 2, PRAG: 1 } },
-      { id: 'C', text: '“Nix 不是有手就行？”', effect: { COOL: 1, ARCH: 1, IDK: 1 } },
+      { id: 'C', text: '“Nix 不是有手就行？”', effect: { COOL: 2, ARCH: 1 } },
       { id: 'D', text: '确实很难，我退坑了（掀桌）', effect: { WIN: 1, ARCH: 1, IDK: 1 } },
     ],
   },
@@ -117,7 +117,7 @@ export const questions: Question[] = [
     options: [
       { id: 'A', text: '田字信仰，我选 Windows', effect: { WIN: 8 } },
       { id: 'B', text: '什么 surface, NixOS 启动器罢了', effect: { REPRO: 1, ENV: 1, COOL: 1 } },
-      { id: 'C', text: '什么 surface, Arch 启动器罢了', effect: { ARCH: 3 } },
+      { id: 'C', text: '什么 surface, Arch 启动器罢了', effect: { ARCH: 8 } },
       { id: 'D', text: '出掉，小破电脑一点都不适用', effect: { PRAG: 1, IDK: 1, MINI: 1 } },
     ],
   },
@@ -125,7 +125,7 @@ export const questions: Question[] = [
     id: "nix-disappears",
     prompt: "有一天，Nix 和 NixOS 突然从地球上消失了……",
     options: [
-      { id: 'A', text: '正好换回 pacman', effect: { ARCH: 2, PRAG: 1 } },
+      { id: 'A', text: '正好换回 pacman', effect: { ARCH: 5, PRAG: 1 } },
       { id: 'B', text: '看来不得不用 Windows 了', effect: { WIN: 5, LBRD: 1 } },
       { id: 'C', text: '我选 Guix ', effect: { FPL: 1, PLM: 1, SPEC: 1 } },
       { id: 'D', text: '哪个酷我用哪个', effect: { COOL: 2, IDK: 1 } },
@@ -137,7 +137,7 @@ export const questions: Question[] = [
     options: [
       { id: 'A', text: '把复杂系统配置得清清楚楚', effect: { SPEC: 1, PLM: 1, REPRO: 1 } },
       { id: 'B', text: '把流水线跑到丝滑', effect: { DOPS: 2, PERF: 1 } },
-      { id: 'C', text: '把桌面和终端打磨到美仑美奂', effect: { RICE: 3 } },
+      { id: 'C', text: '把桌面和终端打磨到美仑美奂', effect: { RICE: 3, ARCH: 1 } },
       { id: 'D', text: '能用就行！', effect: { PRAG: 2, IDK: 1 } },
     ],
   },
@@ -147,7 +147,7 @@ export const questions: Question[] = [
     options: [
       { id: 'A', text: '自己写 Nix 表达式打包，顺便做个贡献', effect: { PKGX: 3, SPEC: 1 } },
       { id: 'B', text: 'flatpub/docker，启动！', effect: { SHELLU: 1, PRAG: 1, IDK: 1 } },
-      { id: 'C', text: '人生苦短 我用 Arch', effect: { ARCH: 2, COOL: 1 } },
+      { id: 'C', text: '人生苦短 我用 Arch', effect: { ARCH: 4, COOL: 1 } },
       { id: 'D', text: '放弃，换其他软件', effect: { MINI: 1, IDK: 1, WIN: 1 } },
     ],
   },
@@ -236,8 +236,8 @@ export const questions: Question[] = [
     prompt: '你在吃雌二醇 🍥️',
     special: "dont-first",
     options: [
-      { id: 'A', text: '是的 😋️', effect: { XYN: 6 } },
-      { id: 'B', text: '还没有，不过我有一个朋友……', effect: { XYN: 2, IDK: 1 } },
+      { id: 'A', text: '是的 😋️', effect: { XYN: 6, ARCH: 2 } },
+      { id: 'B', text: '还没有，不过我有一个朋友……', effect: { XYN: 2, IDK: 1, ARCH: 2 } },
       { id: 'C', text: '不是，我只是个普通 Nix 用户', effect: { PRAG: 1, NEWBIE: 1, IDK: 1 } },
       { id: 'D', text: '何意味？', effect: { IDK: 2, NEWBIE: 1 } },
     ],
@@ -247,7 +247,7 @@ export const questions: Question[] = [
     prompt: '你平时主力操作系统是',
     options: [
       { id: 'A', text: 'NixOS', effect: { REPRO: 1, ENV: 1, FPL: 1 } },
-      { id: 'B', text: '其他 Linux 比如 Arch', effect: { ARCH: 2, COOL: 1 } },
+      { id: 'B', text: '其他 Linux 比如 Arch', effect: { ARCH: 8, COOL: 1 } },
       { id: 'C', text: 'Windows', effect: { WIN: 8 } },
       { id: 'D', text: 'MacOS', effect: { RICE: 1, PRAG: 1, MINI: 1 } },
     ],
@@ -278,7 +278,7 @@ export const questions: Question[] = [
     options: [
       { id: 'A', text: '动漫少女头像', effect: { XYN: 3, RICE: 1 } },
       { id: 'B', text: '真人头像', effect: { PRAG: 1, LBRD: 1, IDK: 1 } },
-      { id: 'C', text: '默头像或随机生成', effect: { MINI: 1, IDK: 1, SHELLU: 1 } },
+      { id: 'C', text: '默认头像或随机生成', effect: { MINI: 1, IDK: 1, SHELLU: 1 } },
       { id: 'D', text: '画，风景，logo等等', effect: { RICE: 2, COOL: 1 } },
     ],
   },
