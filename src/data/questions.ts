@@ -228,7 +228,7 @@ export const questions: Question[] = [
       { id: 'A', text: '可重现性和可靠性', effect: { REPRO: 2, FPL: 1 } },
       { id: 'B', text: '声明式构建系统', effect: { PLM: 2, PKGX: 1 } },
       { id: 'C', text: '拜托，Nix 语言真的很酷', effect: { FPL: 2, COOL: 1 } },
-      { id: 'D', text: '图灵派男娘很多（雾）', effect: { XYN: 4, COOL: 1 } },
+      { id: 'D', text: '图灵派男娘很多（雾）', effect: { XYN: 2, COOL: 1 } },
     ],
   },
   {
@@ -236,7 +236,7 @@ export const questions: Question[] = [
     prompt: '你在吃雌二醇 🍥️',
     special: "dont-first",
     options: [
-      { id: 'A', text: '是的 😋️', effect: { XYN: 6, ARCH: 2 } },
+      { id: 'A', text: '是的 😋️', effect: { XYN: 8, ARCH: 2 } },
       { id: 'B', text: '还没有，不过我有一个朋友……', effect: { XYN: 2, IDK: 1, ARCH: 2 } },
       { id: 'C', text: '不是，我只是个普通 Nix 用户', effect: { PRAG: 1, NEWBIE: 1, IDK: 1 } },
       { id: 'D', text: '何意味？', effect: { IDK: 2, NEWBIE: 1 } },
